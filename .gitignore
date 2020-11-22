@@ -1,5 +1,15 @@
+*.log
+*.pid
+*.swp
+
+logs
+tmp
+
 # Built JS files
 *.js
+
+# Types declaration generated on build
+*.d.ts
 
 # Dependency directory
 node_modules

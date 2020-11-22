@@ -28,7 +28,8 @@
   },
   "devDependencies": {
     "@types/node": "^14.11.8",
-    "fastify": "^3.6.0",
+    "fastify": "^3.8.0",
+    "graasp": "git+https://github.com/graasp/graasp.git#master",
     "typescript": "^4.0.3"
   }
 }

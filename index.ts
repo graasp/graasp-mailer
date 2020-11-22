@@ -1,14 +1,34 @@
 import { promisify } from 'util';
 
-import { FastifyInstance } from 'fastify';
+import { FastifyPluginAsync } from 'fastify';
 import fp from 'fastify-plugin';
 
 import pointOfView from 'point-of-view';
 import * as eta from 'eta';
 
-import { MailerOptions } from '.';
+import { Member } from 'graasp';
 
-async function plugin(fastify: FastifyInstance, options: MailerOptions) {
+declare module 'fastify' {
+  interface FastifyInstance {
+    // remove once fastify-nodemailer has types
+    nodemailer: any;
+    // remove once point-of-view has the types fixed
+    view: any;
+    mailer: {
+      sendRegisterEmail: (member: Member, link: string) => Promise<void>
+      sendLoginEmail: (member: Member, link: string) => Promise<void>
+    };
+  }
+}
+
+interface MailerOptions {
+  host: string,
+  username: string,
+  password: string,
+  fromEmail: string
+}
+
+const plugin: FastifyPluginAsync<MailerOptions> = async (fastify, options) => {
   const {
     host,
     username: user,
@@ -57,6 +77,6 @@ async function plugin(fastify: FastifyInstance, options: MailerOptions) {
 }
 
 export default fp(plugin, {
-  fastify: '>=3.0.0',
+  fastify: '3.x',
   name: 'graasp-mailer'
 });
