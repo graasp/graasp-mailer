@@ -29,7 +29,7 @@
   "devDependencies": {
     "@types/node": "^14.11.8",
     "fastify": "^3.8.0",
-    "graasp": "git+https://github.com/graasp/graasp.git#master",
+    "graasp": "github:graasp/graasp.git#v0.1.0-beta",
     "typescript": "^4.0.3"
   }
 }
