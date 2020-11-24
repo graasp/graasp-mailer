@@ -1,20 +1,18 @@
 {
   "name": "graasp-mailer",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "",
-  "main": "index.js",
-  "types": "index.d.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc",
-    "prepare": "npm run build",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/graasp/graasp-mailer.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Graasp Association",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/graasp/graasp-mailer/issues"
@@ -27,9 +25,9 @@
     "point-of-view": "^4.6.0"
   },
   "devDependencies": {
+    "@types/graasp": "github:graasp/graasp-types.git#master",
     "@types/node": "^14.11.8",
     "fastify": "^3.8.0",
-    "graasp": "github:graasp/graasp.git#v0.1.0-beta",
     "typescript": "^4.0.3"
   }
 }
