@@ -16,7 +16,7 @@ declare module 'fastify' {
     view: any;
     mailer: {
       sendRegisterEmail: (member: Member, link: string) => Promise<void>
-      sendLoginEmail: (member: Member, link: string) => Promise<void>
+      sendLoginEmail: (member: Member, link: string, reRegistrationAttempt?: boolean) => Promise<void>
     };
   }
 }
@@ -59,8 +59,8 @@ const plugin: FastifyPluginAsync<MailerOptions> = async (fastify, options) => {
   const modulePath = module.path;
 
   // Login
-  async function sendLoginEmail(member: { email: string; name: string }, link: string) {
-    const html = await fastify.view(`${modulePath}/templates/login.eta`, { member, link });
+  async function sendLoginEmail(member: { email: string; name: string }, link: string, reRegistrationAttempt = false ) {
+    const html = await fastify.view(`${modulePath}/templates/login.eta`, { member, link, reRegistrationAttempt });
     await sendMail(fromEmail, member.email, 'Sign in', link, html);
   }
 

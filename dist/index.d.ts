@@ -7,7 +7,7 @@ declare module 'fastify' {
         view: any;
         mailer: {
             sendRegisterEmail: (member: Member, link: string) => Promise<void>;
-            sendLoginEmail: (member: Member, link: string) => Promise<void>;
+            sendLoginEmail: (member: Member, link: string, reRegistrationAttempt?: boolean) => Promise<void>;
         };
     }
 }

@@ -57,9 +57,9 @@ const plugin = (fastify, options) => __awaiter(void 0, void 0, void 0, function*
     }
     const modulePath = module.path;
     // Login
-    function sendLoginEmail(member, link) {
+    function sendLoginEmail(member, link, reRegistrationAttempt = false) {
         return __awaiter(this, void 0, void 0, function* () {
-            const html = yield fastify.view(`${modulePath}/templates/login.eta`, { member, link });
+            const html = yield fastify.view(`${modulePath}/templates/login.eta`, { member, link, reRegistrationAttempt });
             yield sendMail(fromEmail, member.email, 'Sign in', link, html);
         });
     }
