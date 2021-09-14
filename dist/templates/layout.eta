@@ -146,50 +146,56 @@
       }
 
       /* -------------------------------------
-          BUTTONS
-      ------------------------------------- */
+            BUTTONS
+        ------------------------------------- */
       .btn {
         box-sizing: border-box;
-        width: 100%; }
-        .btn > tbody > tr > td {
-          padding-bottom: 15px; }
-        .btn table {
-          width: auto;
+        width: 100%;
       }
-        .btn table td {
-          background-color: #ffffff;
-          border-radius: 5px;
-          text-align: center;
+
+      .btn>tbody>tr>td {
+        padding-bottom: 15px;
       }
-        .btn a {
-          background-color: #ffffff;
-          border: solid 1px #3498db;
-          border-radius: 5px;
-          box-sizing: border-box;
-          color: #3498db;
-          cursor: pointer;
-          display: inline-block;
-          font-size: 14px;
-          font-weight: bold;
-          margin: 0;
-          padding: 12px 25px;
-          text-decoration: none;
-          text-transform: capitalize;
+
+      .btn table {
+        width: auto;
+      }
+
+      .btn table td {
+        background-color: #5050d2;
+        border-radius: 5px;
+        text-align: center;
+      }
+
+      .btn a {
+        background-color: #5050d2;
+        border: solid 1px #5050d2;
+        border-radius: 5px;
+        box-sizing: border-box;
+        color: #3498db;
+        cursor: pointer;
+        display: inline-block;
+        font-size: 14px;
+        font-weight: bold;
+        margin: 0;
+        padding: 12px 25px;
+        text-decoration: none;
+        text-transform: capitalize;
       }
 
       .btn-primary table td {
-        background-color: #3498db;
+        background-color: #5050d2;
       }
 
       .btn-primary a {
-        background-color: #3498db;
-        border-color: #3498db;
+        background-color: #5050d2;
+        border-color: #5050d2;
         color: #ffffff;
       }
 
       /* -------------------------------------
-          OTHER STYLES THAT MIGHT BE USEFUL
-      ------------------------------------- */
+            OTHER STYLES THAT MIGHT BE USEFUL
+        ------------------------------------- */
       .last {
         margin-bottom: 0;
       }
@@ -349,14 +355,21 @@
                   <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                     <tr>
                       <td>
-                          <%~ it.body %>
+                        <h1>
+                          Graasp
+                        </h1>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <%~ it.body %>
                       </td>
                     </tr>
                   </table>
                 </td>
               </tr>
 
-            <!-- END MAIN CONTENT AREA -->
+              <!-- END MAIN CONTENT AREA -->
             </table>
             <!-- END CENTERED WHITE CONTAINER -->
 
@@ -365,13 +378,16 @@
               <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                 <tr>
                   <td class="content-block">
-                    <span class="apple-link">Company Inc, 3 Abbey Road, San Francisco CA 94102</span>
-                    <br> Don't like these emails? <a href="http://i.imgur.com/CScmqnj.gif">Unsubscribe</a>.
+
+
+                    You are recieving this email beacause of your account on <a href="http://auth.graasp.com">graasp</a>.
+                    <br />
+                    <span class="apple-link">React Group, Station 11 EPFL, Ecublens 1015 Lausanne</span>
                   </td>
                 </tr>
                 <tr>
                   <td class="content-block powered-by">
-                    Powered by <a href="http://htmlemail.io">HTMLemail</a>.
+                    Powered by <a href="http://graasp.org">Graasp.org</a>.
                   </td>
                 </tr>
               </table>
