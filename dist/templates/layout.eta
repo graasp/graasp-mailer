@@ -312,16 +312,16 @@
           PRESERVE THESE STYLES IN THE HEAD
       ------------------------------------- */
     @media all {
-      .ExternalClass {
+      .external-class {
         width: 100%;
       }
 
-      .ExternalClass,
-      .ExternalClass p,
-      .ExternalClass span,
-      .ExternalClass font,
-      .ExternalClass td,
-      .ExternalClass div {
+      .external-class,
+      .external-class p,
+      .external-class span,
+      .external-class font,
+      .external-class td,
+      .external-class div {
         line-height: 100%;
       }
 
@@ -334,7 +334,7 @@
         text-decoration: none !important;
       }
 
-      #MessageViewBody a {
+      #message-view-body a {
         color: inherit;
         text-decoration: none;
         font-size: inherit;
@@ -403,7 +403,7 @@
               </tr>
               <tr>
                 <td class="content-block powered-by">
-                  Powered by <a href="http://graasp.org">Graasp.org</a>.
+                  Powered by <a href="http://graasp.org">Graasp</a>.
                 </td>
               </tr>
             </table>
