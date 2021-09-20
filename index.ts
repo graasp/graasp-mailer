@@ -8,6 +8,12 @@ import * as eta from 'eta';
 
 import { Member } from 'graasp';
 
+import en from './lang/en.json';
+import fr from './lang/fr.json';
+
+import i18n from 'i18next';
+import path from 'path';
+
 declare module 'fastify' {
   interface FastifyInstance {
     // remove once fastify-nodemailer has types
@@ -47,6 +53,30 @@ const plugin: FastifyPluginAsync<MailerOptions> = async (fastify, options) => {
     secure: true
   });
 
+  i18n.init({
+    resources: {
+      en,
+      fr,
+    },
+    lng: 'en',
+    fallbackLng: 'en',
+    // debug only when not in production
+    debug: process.env.NODE_ENV !== 'production',
+    ns: ['translations'],
+    defaultNS: 'translations',
+    keySeparator: false,
+    interpolation: {
+      escapeValue: false,
+      formatSeparator: ',',
+    },
+    react: {
+      wait: true,
+    },
+  });
+
+  await i18n.changeLanguage('en');
+  const translated = i18n.t('test');
+
   const promisifiedNodemailerSendMail =
     // sendMail() uses 'this' internally and 'promisify' breaks that, so it needs to be passed
     promisify(fastify.nodemailer.sendMail.bind(fastify.nodemailer));
@@ -60,7 +90,7 @@ const plugin: FastifyPluginAsync<MailerOptions> = async (fastify, options) => {
 
   // Login
   async function sendLoginEmail(member: { email: string; name: string }, link: string, reRegistrationAttempt = false ) {
-    const html = await fastify.view(`${modulePath}/templates/login.eta`, { member, link, reRegistrationAttempt });
+    const html = await fastify.view(`${modulePath}/templates/login.eta`, { member, link, reRegistrationAttempt, translated });
     await sendMail(fromEmail, member.email, 'Sign in', link, html);
   }
 
@@ -74,7 +104,7 @@ const plugin: FastifyPluginAsync<MailerOptions> = async (fastify, options) => {
     sendLoginEmail,
     sendRegisterEmail
   });
-}
+};
 
 export default fp(plugin, {
   fastify: '3.x',

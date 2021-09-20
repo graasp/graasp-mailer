@@ -23,6 +23,7 @@
     "eta": "^1.11.0",
     "fastify-nodemailer": "^5.0.0",
     "fastify-plugin": "^3.0.0",
+    "i18next": "^20.6.1",
     "point-of-view": "^4.6.0"
   },
   "devDependencies": {

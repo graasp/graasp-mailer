@@ -1,25 +1,26 @@
 <% layout('./layout') %>
-  <h2><b>Hello!</b></h2>
+<h2><b>Hello!</b></h2>
 
-  <p>You asked us to send you a magic link for quickly signing in to your account. Here your go:</p>
+<p>You asked us to send you a magic link for quickly signing in to your account. Here your go:</p>
 
-  <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
-    <tbody>
-      <tr>
-        <td align="center">
-          <table role="presentation" border="0" cellpadding="0" cellspacing="0">
-            <tbody>
-              <tr>
-                <td> <a href="<%= it.link %>" target="_blank">Sign In</a> </td>
-              </tr>
-            </tbody>
-          </table>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+<table role="presentation" border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
+  <tbody>
+    <tr>
+      <td align="center">
+        <table role="presentation" border="0" cellpadding="0" cellspacing="0">
+          <tbody>
+            <tr>
+              <td><a href="<%= it.link %>" target="_blank">Sign In</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
-  <p>
-    If you haven't requested the link, no further action is required. It will expire soon, don't worry you account and
-    data are safe.
-  </p>
+<%= it.translated %>
+<p>
+  If you haven't requested the link, no further action is required. It will expire soon, don't worry
+  you account and data are safe.
+</p>
