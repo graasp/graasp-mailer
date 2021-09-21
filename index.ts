@@ -12,7 +12,6 @@ import en from './lang/en.json';
 import fr from './lang/fr.json';
 
 import i18n from 'i18next';
-import path from 'path';
 
 declare module 'fastify' {
   interface FastifyInstance {
@@ -74,9 +73,6 @@ const plugin: FastifyPluginAsync<MailerOptions> = async (fastify, options) => {
     },
   });
 
-  await i18n.changeLanguage('en');
-  const translated = i18n.t('test');
-
   const promisifiedNodemailerSendMail =
     // sendMail() uses 'this' internally and 'promisify' breaks that, so it needs to be passed
     promisify(fastify.nodemailer.sendMail.bind(fastify.nodemailer));
@@ -89,14 +85,16 @@ const plugin: FastifyPluginAsync<MailerOptions> = async (fastify, options) => {
   const modulePath = module.path;
 
   // Login
-  async function sendLoginEmail(member: { email: string; name: string }, link: string, reRegistrationAttempt = false ) {
+  async function sendLoginEmail(member: { email: string; name: string }, link: string, reRegistrationAttempt = false, lang = 'en' ) {
+    const translated = await i18n.changeLanguage(lang);
     const html = await fastify.view(`${modulePath}/templates/login.eta`, { member, link, reRegistrationAttempt, translated });
     await sendMail(fromEmail, member.email, 'Sign in', link, html);
   }
 
   // Register
-  async function sendRegisterEmail(member: { email: string; name: string }, link: string) {
-    const html = await fastify.view(`${modulePath}/templates/register.eta`, { member, link });
+  async function sendRegisterEmail(member: { email: string; name: string }, link: string, lang = 'en') {
+    const translated = await i18n.changeLanguage(lang);
+    const html = await fastify.view(`${modulePath}/templates/register.eta`, { member, link, translated });
     await sendMail(fromEmail, member.email, 'Register', link, html);
   }
 

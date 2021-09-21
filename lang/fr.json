@@ -1,5 +1,12 @@
 {
-    "translations": {
-      "test": "test fr"
-    }
+  "translations": {
+    "greetings": "Merci de t'être inscrit sur notre plateforme.",
+    "verifyinfos": "Vérifie ton e-mail en cliquant sur le bouton suivant.",
+    "register": "Compléter l'inscription et se connecter",
+    "unrequestedregister": "Si tu ne te souvient pas t'être inscrit sur Graasp, tu peux juste ignorer cet email.",
+    
+    "signin": "Se connecter",
+    "magiclink" : "Tu nous a demandé de t'envoyer un lien magique pour te connecter rapidement. Il est là:",
+    "unrequestedlink": "Si tu n'as pas demandé de lien, tu n'as rien besion de faire. Il va bientôt expirer, ne t'inquiète pas ton compte et tes données sont en sécurité."
   }
+}
