@@ -3,10 +3,10 @@
     "greetings": "Merci de vous être inscrit sur notre plateforme.",
     "verifyinfos": "Vérifiez votre e-mail en cliquant sur le bouton suivant.",
     "register": "Compléter l'inscription et se connecter",
-    "unrequestedregister": "Si vous ne voud souvenez pas vous être inscrit sur Graasp, vous pouvez ignorer cet email.",
+    "unrequestedregister": "Si vous ne vous souvenez pas vous être inscrit sur Graasp, vous pouvez ignorer cet email.",
 
     "signin": "Se connecter",
     "magiclink" : "Vous nous avez demandé un lien magique pour vous connecter rapidement. Il est là:",
-    "unrequestedlink": "Si vous n'avez pas demandé de lien, il n'y a rien à faire. Il va bientôt expirer, ne vous inquiètez pas vore compte et données sont en sécurité."
+    "unrequestedlink": "Si vous n'avez pas demandé de lien, il n'y a rien à faire. Il va bientôt expirer, ne vous inquiétez pas votre compte et données sont en sécurité."
   }
 }
