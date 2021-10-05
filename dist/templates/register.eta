@@ -1,21 +1,22 @@
 <% layout('./layout') %>
-<p>Hi <%= it.member.name %>,</p>
-<p>Thank you for signing up to our platform.</p>
-<p>Sometimes you just want to send a simple HTML email with a simple design and clear call to action. This is it.</p>
-<table role="presentation" border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
-  <tbody>
-    <tr>
-      <td align="left">
-        <table role="presentation" border="0" cellpadding="0" cellspacing="0">
-          <tbody>
-            <tr>
-              <td> <a href="<%= it.link %>" target="_blank">Complete registration and sign in</a> </td>
-            </tr>
-          </tbody>
-        </table>
-      </td>
-    </tr>
-  </tbody>
-</table>
-<p>This is a really simple email template. Its sole purpose is to get the recipient to click the button with no distractions.</p>
-<p>Good luck! Hope it works.</p>
+  <p>Hey <%= it.member.name %>,</p>
+  <p><%= it.translated("greetings") %></p>
+  <p><%= it.translated("verifyinfos") %></p>
+
+  <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
+    <tbody>
+      <tr>
+        <td align="center">
+          <table role="presentation" border="0" cellpadding="0" cellspacing="0">
+            <tbody>
+              <tr>
+                <td> <a href="<%= it.link %>" target="_blank"><%= it.translated("register") %></a> </td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p><%= it.translated("unrequestedregister") %></p>
