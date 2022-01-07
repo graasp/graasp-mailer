@@ -2,44 +2,45 @@ import { promisify } from 'util';
 
 import { FastifyPluginAsync } from 'fastify';
 import fp from 'fastify-plugin';
-
 import pointOfView from 'point-of-view';
 import * as eta from 'eta';
+import fastifyPolyglot from 'fastify-polyglot';
 
 import { Member } from 'graasp';
 
-import en from './lang/en.json';
-import fr from './lang/fr.json';
-
-import i18n from 'i18next';
+const DEFAULT_LANG = 'en';
 
 declare module 'fastify' {
   interface FastifyInstance {
     // remove once fastify-nodemailer has types
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     nodemailer: any;
     // remove once point-of-view has the types fixed
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     view: any;
+    // remove once fastify-polyglot has types
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    i18n: any;
     mailer: {
-      sendRegisterEmail: (member: Member, link: string) => Promise<void>
-      sendLoginEmail: (member: Member, link: string, reRegistrationAttempt?: boolean) => Promise<void>
+      sendRegisterEmail: (member: Member, link: string) => Promise<void>;
+      sendLoginEmail: (
+        member: Member,
+        link: string,
+        reRegistrationAttempt?: boolean,
+      ) => Promise<void>;
     };
   }
 }
 
 interface MailerOptions {
-  host: string,
-  username: string,
-  password: string,
-  fromEmail: string
+  host: string;
+  username: string;
+  password: string;
+  fromEmail: string;
 }
 
 const plugin: FastifyPluginAsync<MailerOptions> = async (fastify, options) => {
-  const {
-    host,
-    username: user,
-    password: pass,
-    fromEmail
-  } = options;
+  const { host, username: user, password: pass, fromEmail } = options;
 
   fastify.register(pointOfView, { engine: { eta } });
 
@@ -49,28 +50,13 @@ const plugin: FastifyPluginAsync<MailerOptions> = async (fastify, options) => {
     auth: { user, pass },
     pool: true,
     port: 465,
-    secure: true
+    secure: true,
   });
 
-  i18n.init({
-    resources: {
-      en,
-      fr,
-    },
-    lng: 'en',
-    fallbackLng: 'en',
-    // debug only when not in production
+  fastify.register(fastifyPolyglot, {
+    defaultLocale: DEFAULT_LANG,
+    localesPath: './lang',
     debug: process.env.NODE_ENV !== 'production',
-    ns: ['translations'],
-    defaultNS: 'translations',
-    keySeparator: false,
-    interpolation: {
-      escapeValue: false,
-      formatSeparator: ',',
-    },
-    react: {
-      wait: true,
-    },
   });
 
   const promisifiedNodemailerSendMail =
@@ -85,26 +71,44 @@ const plugin: FastifyPluginAsync<MailerOptions> = async (fastify, options) => {
   const modulePath = module.path;
 
   // Login
-  async function sendLoginEmail(member: { email: string; name: string }, link: string, reRegistrationAttempt = false, lang = 'en' ) {
-    const translated = await i18n.changeLanguage(lang);
-    const html = await fastify.view(`${modulePath}/templates/login.eta`, { member, link, reRegistrationAttempt, translated });
+  async function sendLoginEmail(
+    member: { email: string; name: string },
+    link: string,
+    reRegistrationAttempt = false,
+    lang = DEFAULT_LANG,
+  ) {
+    const translated = await fastify.i18n.changeLanguage(lang);
+    const html = await fastify.view(`${modulePath}/templates/login.eta`, {
+      member,
+      link,
+      reRegistrationAttempt,
+      translated,
+    });
     await sendMail(fromEmail, member.email, 'Sign in', link, html);
   }
 
   // Register
-  async function sendRegisterEmail(member: { email: string; name: string }, link: string, lang = 'en') {
-    const translated = await i18n.changeLanguage(lang);
-    const html = await fastify.view(`${modulePath}/templates/register.eta`, { member, link, translated });
+  async function sendRegisterEmail(
+    member: { email: string; name: string },
+    link: string,
+    lang = DEFAULT_LANG,
+  ) {
+    const translated = await fastify.i18n.changeLanguage(lang);
+    const html = await fastify.view(`${modulePath}/templates/register.eta`, {
+      member,
+      link,
+      translated,
+    });
     await sendMail(fromEmail, member.email, 'Register', link, html);
   }
 
   fastify.decorate('mailer', {
     sendLoginEmail,
-    sendRegisterEmail
+    sendRegisterEmail,
   });
 };
 
 export default fp(plugin, {
   fastify: '3.x',
-  name: 'graasp-mailer'
+  name: 'graasp-mailer',
 });
