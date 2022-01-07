@@ -5,7 +5,6 @@
 logs
 tmp
 
-!dist/templates/*
 dist
 
 # Dependency directory
