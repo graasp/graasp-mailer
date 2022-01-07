@@ -7,15 +7,16 @@
   "scripts": {
     "prepare": "yarn build & yarn hooks:install",
     "prepack": "yarn build",
-    "build": "tsc",
+    "build": "tsc & yarn copy-assets",
     "test": "echo \"Error: no test specified\" && exit 0",
     "pre-commit": "yarn prettier:check && yarn lint",
     "hooks:uninstall": "husky uninstall",
     "hooks:install": "husky install",
     "post-commit": "git status",
-    "prettier:check": "prettier --check \"**/*.ts\"",
-    "prettier:write": "prettier --write \"**/*.ts\"",
-    "lint": "tsc --noEmit && eslint \"**/*.{js,ts}\"  --fix"
+    "prettier:check": "prettier --check \"src/**/*.{js,ts}\"",
+    "prettier:write": "prettier --write \"src/**/*.{js,ts}\"",
+    "lint": "tsc --noEmit && eslint \"src/**/*.{js,ts}\"  --fix",
+    "copy-assets": "cpy ./src/lang ./dist/lang && cpy ./src/templates ./dist/templates"
   },
   "repository": {
     "type": "git",
@@ -29,6 +30,7 @@
   },
   "homepage": "https://github.com/graasp/graasp-mailer#readme",
   "dependencies": {
+    "cpy-cli": "3.1.1",
     "eta": "^1.12.3",
     "fastify-nodemailer": "^5.0.0",
     "fastify-plugin": "^3.0.0",

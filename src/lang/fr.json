@@ -4,9 +4,8 @@
     "verifyinfos": "Vérifiez votre e-mail en cliquant sur le bouton ci-dessous.",
     "register": "Compléter l'inscription et se connecter",
     "unrequestedregister": "Si vous ne pensez pas vous être inscrit sur Graasp, vous pouvez ignorer cet email.",
-
     "signin": "Se connecter",
-    "magiclink" : "Vous nous avez demandé un lien magique pour vous connecter rapidement. Il est là:",
+    "magiclink": "Vous nous avez demandé un lien magique pour vous connecter rapidement. Il est là:",
     "unrequestedlink": "Si vous n'avez pas demandé de lien, aucune action supplémentaire n'est requise. Il va bientôt expirer, ne vous inquiétez pas votre compte et données sont en sécurité."
   }
 }
