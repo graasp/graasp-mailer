@@ -1,4 +1,5 @@
 import { promisify } from 'util';
+import path from 'path';
 
 import { FastifyPluginAsync } from 'fastify';
 import fp from 'fastify-plugin';
@@ -55,7 +56,7 @@ const plugin: FastifyPluginAsync<MailerOptions> = async (fastify, options) => {
 
   fastify.register(fastifyPolyglot, {
     defaultLocale: DEFAULT_LANG,
-    localesPath: './lang',
+    localesPath: path.join(__dirname, './lang'),
     debug: process.env.NODE_ENV !== 'production',
   });
 
