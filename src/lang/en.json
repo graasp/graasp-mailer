@@ -1,5 +1,4 @@
 {
-  "translations": {
     "greetings": "Thank you for signing up to our platform.",
     "verifyinfos": "Please verify your email by clicking on the following button.",
     "register": "Complete registration and sign in",
@@ -7,5 +6,4 @@
     "signin": "Sign In",
     "magiclink": "You asked us to send you a magic link for quickly signing in to your account. Here your go:",
     "unrequestedlink": "If you haven't requested the link, no further action is required. It will expire soon, don't worry you account and data are safe."
-  }
 }
