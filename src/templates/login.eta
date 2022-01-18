@@ -1,7 +1,7 @@
 <% layout('./layout') %>
 <h2><b>Hello!</b></h2>
 
-<p><%= it.translated("magiclink") %></p>
+<p><%= it.translated["magiclink"] %></p>
 
 <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
   <tbody>
@@ -10,7 +10,7 @@
         <table role="presentation" border="0" cellpadding="0" cellspacing="0">
           <tbody>
             <tr>
-              <td><a href="<%= it.link %>" target="_blank"><%= it.translated("signin") %></a></td>
+              <td><a href="<%= it.link %>" target="_blank"><%= it.translated["signin"] %></a></td>
             </tr>
           </tbody>
         </table>
@@ -20,5 +20,5 @@
 </table>
 
 <p>
-  <%= it.translated("unrequestedlink") %>
+  <%= it.translated["unrequestedlink"] %>
 </p>

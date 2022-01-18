@@ -8,8 +8,7 @@ import * as eta from 'eta';
 import fastifyPolyglot from 'fastify-polyglot';
 
 import { Member } from 'graasp';
-
-const DEFAULT_LANG = 'en';
+import { DEFAULT_LANG } from './constants';
 
 declare module 'fastify' {
   interface FastifyInstance {
@@ -23,17 +22,18 @@ declare module 'fastify' {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     i18n: any;
     mailer: {
-      sendRegisterEmail: (member: Member, link: string) => Promise<void>;
+      sendRegisterEmail: (member: Member, link: string, lang?: string) => Promise<void>;
       sendLoginEmail: (
         member: Member,
         link: string,
         reRegistrationAttempt?: boolean,
+        lang?: string,
       ) => Promise<void>;
     };
   }
 }
 
-interface MailerOptions {
+export interface MailerOptions {
   host: string;
   username: string;
   password: string;
@@ -54,6 +54,8 @@ const plugin: FastifyPluginAsync<MailerOptions> = async (fastify, options) => {
     secure: true,
   });
 
+  // we cannot use i18n.t in eta files
+  // a solution to use plural/variable in translation is to pass the string directly
   fastify.register(fastifyPolyglot, {
     defaultLocale: DEFAULT_LANG,
     localesPath: path.join(__dirname, './lang'),
@@ -78,7 +80,8 @@ const plugin: FastifyPluginAsync<MailerOptions> = async (fastify, options) => {
     reRegistrationAttempt = false,
     lang = DEFAULT_LANG,
   ) {
-    const translated = await fastify.i18n.changeLanguage(lang);
+    fastify.i18n.locale(lang);
+    const translated = fastify.i18n.locales[lang] ?? fastify.i18n.locales[DEFAULT_LANG];
     const html = await fastify.view(`${modulePath}/templates/login.eta`, {
       member,
       link,
@@ -94,7 +97,8 @@ const plugin: FastifyPluginAsync<MailerOptions> = async (fastify, options) => {
     link: string,
     lang = DEFAULT_LANG,
   ) {
-    const translated = await fastify.i18n.changeLanguage(lang);
+    fastify.i18n.locale(lang);
+    const translated = fastify.i18n.locales[lang] ?? fastify.i18n.locales[DEFAULT_LANG];
     const html = await fastify.view(`${modulePath}/templates/register.eta`, {
       member,
       link,
