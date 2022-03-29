@@ -17,7 +17,7 @@
     "prettier:check": "prettier --check \"{src,test}/**/*.{js,ts}\"",
     "prettier:write": "prettier --write \"{src,test}/**/*.{js,ts}\"",
     "lint": "tsc --noEmit && eslint \"{src,test}/**/*.{js,ts}\"  --fix",
-    "copy-assets": "cpy ./src/lang ./dist/lang && cpy ./src/templates ./dist/templates"
+    "copy-assets": "cpy . ../../dist/lang --cwd=./src/lang && cpy . ../../dist/templates --cwd=./src/templates "
   },
   "repository": {
     "type": "git",
