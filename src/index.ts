@@ -29,6 +29,7 @@ declare module 'fastify' {
         reRegistrationAttempt?: boolean,
         lang?: string,
       ) => Promise<void>;
+      sendActionExportEmail: (member: Member, link: string, lang?: string) => Promise<void>;
     };
   }
 }
