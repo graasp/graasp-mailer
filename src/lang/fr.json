@@ -5,5 +5,7 @@
     "unrequestedregister": "Si vous ne pensez pas vous être inscrit sur Graasp, vous pouvez ignorer cet email.",
     "signin": "Se connecter",
     "magiclink": "Vous nous avez demandé un lien magique pour vous connecter rapidement. Il est là:",
-    "unrequestedlink": "Si vous n'avez pas demandé de lien, aucune action supplémentaire n'est requise. Il va bientôt expirer, ne vous inquiétez pas votre compte et données sont en sécurité."
+    "unrequestedlink": "Si vous n'avez pas demandé de lien, aucune action supplémentaire n'est requise. Il va bientôt expirer, ne vous inquiétez pas votre compte et données sont en sécurité.",
+    "actionInformation": "Une demande d'export des traces analytiques pour l'élément {{itemName}} a bien été reçue, voici le lien pour télécharger les fichiers. Les fichiers seront disponibles pendant {{days}} jours",
+    "download": "Télécharger"
 }

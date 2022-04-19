@@ -107,9 +107,26 @@ const plugin: FastifyPluginAsync<MailerOptions> = async (fastify, options) => {
     await sendMail(fromEmail, member.email, 'Register', link, html);
   }
 
+  // Download link for actions
+  async function sendActionExportEmail(
+    member: { email: string; name: string },
+    link: string,
+    lang = DEFAULT_LANG,
+  ) {
+    fastify.i18n.locale(lang);
+    const translated = fastify.i18n.locales[lang] ?? fastify.i18n.locales[DEFAULT_LANG];
+    const html = await fastify.view(`${modulePath}/templates/actionExport.eta`, {
+      member,
+      link,
+      translated,
+    });
+    await sendMail(fromEmail, member.email, 'Analytic Traces Download Link', link, html);
+  }
+
   fastify.decorate('mailer', {
     sendLoginEmail,
     sendRegisterEmail,
+    sendActionExportEmail,
   });
 };
 
