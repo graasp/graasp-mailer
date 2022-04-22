@@ -6,6 +6,6 @@
     "signin": "Sign In",
     "magiclink": "You asked us to send you a magic link for quickly signing in to your account. Here your go:",
     "unrequestedlink": "If you haven't requested the link, no further action is required. It will expire soon, don't worry you account and data are safe.",
-    "actionInformation": "You requested to download actions from item {{itemName}}, here is the link to download the files. It will be available for {{days}} days",
+    "exportActionsInformation": "You requested to download actions from item %{itemName}, here is the link to download the files. It will be available for %{days} days",
     "download": "Download"
 }

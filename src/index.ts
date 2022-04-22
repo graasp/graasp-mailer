@@ -8,7 +8,7 @@ import * as eta from 'eta';
 import fastifyPolyglot from 'fastify-polyglot';
 
 import { Member } from 'graasp';
-import { DEFAULT_LANG } from './constants';
+import { DEFAULT_LANG, DEFAULT_EXPORT_ACTIONS_VALIDITY_IN_DAYS } from './constants';
 
 declare module 'fastify' {
   interface FastifyInstance {
@@ -29,7 +29,13 @@ declare module 'fastify' {
         reRegistrationAttempt?: boolean,
         lang?: string,
       ) => Promise<void>;
-      sendActionExportEmail: (member: Member, link: string, lang?: string) => Promise<void>;
+      sendExportActionsEmail: (
+        member: Member,
+        link: string,
+        itemName: string,
+        lang?: string,
+        expirationDays?: number,
+      ) => Promise<void>;
     };
   }
 }
@@ -109,17 +115,27 @@ const plugin: FastifyPluginAsync<MailerOptions> = async (fastify, options) => {
   }
 
   // Download link for actions
-  async function sendActionExportEmail(
+  async function sendExportActionsEmail(
     member: { email: string; name: string },
     link: string,
-    lang = DEFAULT_LANG,
+    itemName: string,
+    lang: string = DEFAULT_LANG,
+    expirationDays: number = DEFAULT_EXPORT_ACTIONS_VALIDITY_IN_DAYS,
   ) {
     fastify.i18n.locale(lang);
     const translated = fastify.i18n.locales[lang] ?? fastify.i18n.locales[DEFAULT_LANG];
-    const html = await fastify.view(`${modulePath}/templates/actionExport.eta`, {
+    // this line necessary for .t() to correctly use the changed locale
+    fastify.i18n.replace(translated);
+    const information = fastify.i18n.t('exportActionsInformation', {
+      itemName,
+      days: expirationDays,
+    });
+
+    const html = await fastify.view(`${modulePath}/templates/exportActions.eta`, {
       member,
       link,
       translated,
+      information,
     });
     await sendMail(fromEmail, member.email, 'Analytic Traces Download Link', link, html);
   }
@@ -127,7 +143,7 @@ const plugin: FastifyPluginAsync<MailerOptions> = async (fastify, options) => {
   fastify.decorate('mailer', {
     sendLoginEmail,
     sendRegisterEmail,
-    sendActionExportEmail,
+    sendExportActionsEmail,
   });
 };
 
