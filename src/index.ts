@@ -95,7 +95,8 @@ const plugin: FastifyPluginAsync<MailerOptions> = async (fastify, options) => {
       reRegistrationAttempt,
       translated,
     });
-    await sendMail(fromEmail, member.email, 'Sign in', link, html);
+    const title = translated['signInMailTitle'];
+    await sendMail(fromEmail, member.email, title, link, html);
   }
 
   // Register
@@ -111,7 +112,8 @@ const plugin: FastifyPluginAsync<MailerOptions> = async (fastify, options) => {
       link,
       translated,
     });
-    await sendMail(fromEmail, member.email, 'Register', link, html);
+    const title = translated['registerationMailTitle'];
+    await sendMail(fromEmail, member.email, title, link, html);
   }
 
   // Download link for actions
@@ -137,7 +139,8 @@ const plugin: FastifyPluginAsync<MailerOptions> = async (fastify, options) => {
       translated,
       information,
     });
-    await sendMail(fromEmail, member.email, 'Analytic Traces Download Link', link, html);
+    const title = fastify.i18n.t('exportActionsMailTitle', { itemName });
+    await sendMail(fromEmail, member.email, title, link, html);
   }
 
   fastify.decorate('mailer', {
