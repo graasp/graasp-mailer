@@ -14,8 +14,8 @@
     "hooks:uninstall": "husky uninstall",
     "hooks:install": "husky install",
     "post-commit": "git status",
-    "prettier:check": "prettier --check \"{src,test}/**/*.{js,ts}\"",
-    "prettier:write": "prettier --write \"{src,test}/**/*.{js,ts}\"",
+    "prettier:check": "prettier --check \"{src,test}/**/*.{js,ts,json}\"",
+    "prettier:write": "prettier --write \"{src,test}/**/*.{js,ts,json}\"",
     "lint": "tsc --noEmit && eslint \"{src,test}/**/*.{js,ts}\"  --fix",
     "copy-assets": "cpy . ../../dist/lang --cwd=./src/lang && cpy . ../../dist/templates --cwd=./src/templates "
   },

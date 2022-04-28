@@ -1,9 +1,14 @@
 {
-    "greetings": "Thank you for signing up to our platform.",
-    "verifyinfos": "Please verify your email by clicking on the following button.",
-    "register": "Complete registration and sign in",
-    "unrequestedregister": "If you don't remember signing up to Graasp, you can just ignore this email.",
-    "signin": "Sign In",
-    "magiclink": "You asked us to send you a magic link for quickly signing in to your account. Here your go:",
-    "unrequestedlink": "If you haven't requested the link, no further action is required. It will expire soon, don't worry you account and data are safe."
+  "greetings": "Thank you for signing up to our platform.",
+  "verifyinfos": "Please verify your email by clicking on the following button.",
+  "register": "Complete registration and sign in",
+  "unrequestedregister": "If you don't remember signing up to Graasp, you can just ignore this email.",
+  "signin": "Sign In",
+  "magiclink": "You asked us to send you a magic link for quickly signing in to your account. Here your go:",
+  "unrequestedlink": "If you haven't requested the link, no further action is required. It will expire soon, don't worry your account and data are safe.",
+  "exportActionsInformation": "You requested to download actions from item %{itemName}, here is the link to download the files. It will be available for %{days} days",
+  "download": "Download",
+  "signInMailTitle": "Sign In Link",
+  "registerationMailTitle": "Register",
+  "exportActionsMailTitle": "Analytic Traces Download Link for %{itemName}"
 }

@@ -5,6 +5,7 @@ import { Member } from 'graasp';
 import util from 'util';
 import englishTranslations from '../src/lang/en.json';
 import frenchTranslations from '../src/lang/fr.json';
+import { DEFAULT_EXPORT_ACTIONS_VALIDITY_IN_DAYS } from '../src/constants';
 
 const buildMember = (lang?: string) =>
   ({
@@ -16,22 +17,32 @@ const buildMember = (lang?: string) =>
 
 const DEFAULT_LINK = 'link';
 const DEFAULT_RE_REGISTRATION_ATTEMPT = false;
+const itemName = 'my-item-name';
 
 type Translations = { [key: string]: string };
 
 // WARNING: might break if promisify is used once more for another function
-const setupValidateSendMail = (translations: Translations, keyToCheck: string) => {
+const setupValidateSendMail = (
+  translations: Translations,
+  keyToCheck: string,
+  elements?: string[],
+) => {
   jest.spyOn(util, 'promisify').mockImplementation(() => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return (d: any) => {
       // check one translation in english
       expect(d.html).toContain(translations[keyToCheck]);
+      elements?.forEach((s) => {
+        expect(d.html).toContain(s);
+      });
     };
   });
 };
 
 const setupValidateSendLoginMail = (t: Translations) => setupValidateSendMail(t, 'magiclink');
 const setupValidateSendRegisterMail = (t: Translations) => setupValidateSendMail(t, 'greetings');
+const setupValidateSendExportActionEmail = (t: Translations, elements: string[]) =>
+  setupValidateSendMail(t, 'download', elements);
 
 describe('Plugin Tests', () => {
   beforeEach(() => {
@@ -101,6 +112,41 @@ describe('Plugin Tests', () => {
 
       const app = await build({ plugin });
       app.mailer.sendRegisterEmail(buildMember(lang), DEFAULT_LINK, lang);
+    });
+  });
+
+  describe('sendExportActionsEmail', () => {
+    it('Send export actions mail with default values', async () => {
+      setupValidateSendExportActionEmail(englishTranslations, [
+        itemName,
+        `${DEFAULT_EXPORT_ACTIONS_VALIDITY_IN_DAYS} days`,
+      ]);
+
+      const app = await build({ plugin });
+      app.mailer.sendExportActionsEmail(buildMember(), DEFAULT_LINK, itemName);
+    });
+
+    it('Send export actions mail with given values', async () => {
+      const lang = 'fr';
+      const expirationDays = 3;
+      setupValidateSendExportActionEmail(frenchTranslations, [itemName, `${expirationDays} jours`]);
+
+      const app = await build({ plugin });
+      app.mailer.sendExportActionsEmail(
+        buildMember(lang),
+        DEFAULT_LINK,
+        itemName,
+        lang,
+        expirationDays,
+      );
+    });
+
+    it('Send export actions mail with default lang if given lang is not available', async () => {
+      const lang = 'not-valid';
+      setupValidateSendExportActionEmail(englishTranslations, [itemName]);
+
+      const app = await build({ plugin });
+      app.mailer.sendExportActionsEmail(buildMember(lang), DEFAULT_LINK, itemName, lang);
     });
   });
 });
