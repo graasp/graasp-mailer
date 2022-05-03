@@ -18,6 +18,7 @@ const buildMember = (lang?: string) =>
 const DEFAULT_LINK = 'link';
 const DEFAULT_RE_REGISTRATION_ATTEMPT = false;
 const itemName = 'my-item-name';
+const creatorName = 'my-creator-name';
 
 type Translations = { [key: string]: string };
 
@@ -30,8 +31,13 @@ const setupValidateSendMail = (
   jest.spyOn(util, 'promisify').mockImplementation(() => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return (d: any) => {
-      // check one translation in english
-      expect(d.html).toContain(translations[keyToCheck]);
+      // check one translation
+      expect(d.html).toContain(
+        translations[keyToCheck]
+          // TODO: handle better html parsing
+          // parse \' in case of french
+          .replace("'", '&#39;'),
+      );
       elements?.forEach((s) => {
         expect(d.html).toContain(s);
       });
@@ -41,6 +47,8 @@ const setupValidateSendMail = (
 
 const setupValidateSendLoginMail = (t: Translations) => setupValidateSendMail(t, 'magiclink');
 const setupValidateSendRegisterMail = (t: Translations) => setupValidateSendMail(t, 'greetings');
+const setupValidateSendInvitationMail = (t: Translations, elements: string[]) =>
+  setupValidateSendMail(t, 'register', elements);
 const setupValidateSendExportActionEmail = (t: Translations, elements: string[]) =>
   setupValidateSendMail(t, 'download', elements);
 
@@ -147,6 +155,31 @@ describe('Plugin Tests', () => {
 
       const app = await build({ plugin });
       app.mailer.sendExportActionsEmail(buildMember(lang), DEFAULT_LINK, itemName, lang);
+    });
+  });
+
+  describe('sendInvitationEmail', () => {
+    it('Send invitation mail with default values', async () => {
+      setupValidateSendInvitationMail(englishTranslations, [itemName, creatorName]);
+
+      const app = await build({ plugin });
+      app.mailer.sendInvitationEmail(buildMember(), DEFAULT_LINK, itemName, creatorName);
+    });
+
+    it('Send invitation mail with given values', async () => {
+      const lang = 'fr';
+      setupValidateSendInvitationMail(frenchTranslations, [itemName, creatorName]);
+
+      const app = await build({ plugin });
+      app.mailer.sendInvitationEmail(buildMember(lang), DEFAULT_LINK, itemName, creatorName, lang);
+    });
+
+    it('Send invitation mail with default lang if given lang is not available', async () => {
+      const lang = 'not-valid';
+      setupValidateSendInvitationMail(englishTranslations, [itemName]);
+
+      const app = await build({ plugin });
+      app.mailer.sendInvitationEmail(buildMember(lang), DEFAULT_LINK, itemName, creatorName, lang);
     });
   });
 });
