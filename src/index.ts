@@ -37,7 +37,7 @@ declare module 'fastify' {
         expirationDays?: number,
       ) => Promise<void>;
       sendInvitationEmail: (
-        member: { email: string; name: string },
+        email: string,
         link: string,
         itemName: string,
         creatorName: string,
@@ -125,7 +125,7 @@ const plugin: FastifyPluginAsync<MailerOptions> = async (fastify, options) => {
 
   // Invitation
   async function sendInvitationEmail(
-    member: { email: string; name: string },
+    email: string,
     link: string,
     itemName: string,
     creatorName: string,
@@ -140,13 +140,12 @@ const plugin: FastifyPluginAsync<MailerOptions> = async (fastify, options) => {
       creatorName,
     });
     const html = await fastify.view(`${modulePath}/templates/invitation.eta`, {
-      member,
       link,
       translated,
       text,
     });
     const title = translated['invitationMailTitle'];
-    await sendMail(fromEmail, member.email, title, link, html);
+    await sendMail(fromEmail, email, title, link, html);
   }
 
   // Download link for actions

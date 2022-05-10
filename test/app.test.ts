@@ -159,11 +159,12 @@ describe('Plugin Tests', () => {
   });
 
   describe('sendInvitationEmail', () => {
+    const email = 'myemail';
     it('Send invitation mail with default values', async () => {
       setupValidateSendInvitationMail(englishTranslations, [itemName, creatorName]);
 
       const app = await build({ plugin });
-      app.mailer.sendInvitationEmail(buildMember(), DEFAULT_LINK, itemName, creatorName);
+      app.mailer.sendInvitationEmail(email, DEFAULT_LINK, itemName, creatorName);
     });
 
     it('Send invitation mail with given values', async () => {
@@ -171,7 +172,7 @@ describe('Plugin Tests', () => {
       setupValidateSendInvitationMail(frenchTranslations, [itemName, creatorName]);
 
       const app = await build({ plugin });
-      app.mailer.sendInvitationEmail(buildMember(lang), DEFAULT_LINK, itemName, creatorName, lang);
+      app.mailer.sendInvitationEmail(email, DEFAULT_LINK, itemName, creatorName, lang);
     });
 
     it('Send invitation mail with default lang if given lang is not available', async () => {
@@ -179,7 +180,7 @@ describe('Plugin Tests', () => {
       setupValidateSendInvitationMail(englishTranslations, [itemName]);
 
       const app = await build({ plugin });
-      app.mailer.sendInvitationEmail(buildMember(lang), DEFAULT_LINK, itemName, creatorName, lang);
+      app.mailer.sendInvitationEmail(email, DEFAULT_LINK, itemName, creatorName, lang);
     });
   });
 });
