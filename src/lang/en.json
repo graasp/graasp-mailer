@@ -12,5 +12,6 @@
   "signInMailTitle": "Sign In Link",
   "registrationMailTitle": "Register",
   "exportActionsMailTitle": "Analytic Traces Download Link for %{itemName}",
-  "invitationText": "%{creatorName} shared %{itemName} with you on the Graasp platform. Click on the following button to complete your registration."
+  "invitationText": "%{creatorName} shared %{itemName} with you on the Graasp platform. Click on the following button to complete your registration.",
+  "invitationMailTitle": "This item was shared with you on Graasp"
 }

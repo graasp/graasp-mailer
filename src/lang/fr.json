@@ -12,5 +12,6 @@
   "signInMailTitle": "Lien de connexion",
   "registrationMailTitle": "Inscription",
   "exportActionsMailTitle": "Lien de téléchargement des traces analytiques de %{itemName}",
-  "invitationText": "%{creatorName} a partagé %{itemName} avec vous sur la plateforme Graasp. Cliquez sur le bouton suivant pour compléter votre inscription."
+  "invitationText": "%{creatorName} a partagé %{itemName} avec vous sur la plateforme Graasp. Cliquez sur le bouton suivant pour compléter votre inscription.",
+  "invitationMailTitle": "Cet élément a été partagé avec vous sur Graasp"
 }
