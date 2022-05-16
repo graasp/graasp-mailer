@@ -36,6 +36,13 @@ declare module 'fastify' {
         lang?: string,
         expirationDays?: number,
       ) => Promise<void>;
+      sendInvitationEmail: (
+        email: string,
+        link: string,
+        itemName: string,
+        creatorName: string,
+        lang?: string,
+      ) => Promise<void>;
     };
   }
 }
@@ -112,8 +119,33 @@ const plugin: FastifyPluginAsync<MailerOptions> = async (fastify, options) => {
       link,
       translated,
     });
-    const title = translated['registerationMailTitle'];
+    const title = translated['registrationMailTitle'];
     await sendMail(fromEmail, member.email, title, link, html);
+  }
+
+  // Invitation
+  async function sendInvitationEmail(
+    email: string,
+    link: string,
+    itemName: string,
+    creatorName: string,
+    lang = DEFAULT_LANG,
+  ) {
+    fastify.i18n.locale(lang);
+    const translated = fastify.i18n.locales[lang] ?? fastify.i18n.locales[DEFAULT_LANG];
+    // this line necessary for .t() to correctly use the changed locale
+    fastify.i18n.replace(translated);
+    const text = fastify.i18n.t('invitationText', {
+      itemName,
+      creatorName,
+    });
+    const html = await fastify.view(`${modulePath}/templates/invitation.eta`, {
+      link,
+      translated,
+      text,
+    });
+    const title = translated['invitationMailTitle'];
+    await sendMail(fromEmail, email, title, link, html);
   }
 
   // Download link for actions
@@ -147,6 +179,7 @@ const plugin: FastifyPluginAsync<MailerOptions> = async (fastify, options) => {
     sendLoginEmail,
     sendRegisterEmail,
     sendExportActionsEmail,
+    sendInvitationEmail,
   });
 };
 
