@@ -36,7 +36,7 @@ const setupValidateSendMail = (
         translations[keyToCheck]
           // TODO: handle better html parsing
           // parse \' in case of french
-          .replace("'", '&#39;'),
+          .replace('\'', '&#39;'),
       );
       elements?.forEach((s) => {
         expect(d.html).toContain(s);
@@ -51,6 +51,8 @@ const setupValidateSendInvitationMail = (t: Translations, elements: string[]) =>
   setupValidateSendMail(t, 'register', elements);
 const setupValidateSendExportActionEmail = (t: Translations, elements: string[]) =>
   setupValidateSendMail(t, 'download', elements);
+const setupValidateSendPublishNotificationMail = (t: Translations, elements: string[]) => 
+  setupValidateSendMail(t, 'publish notification', elements);
 
 describe('Plugin Tests', () => {
   beforeEach(() => {
@@ -181,6 +183,28 @@ describe('Plugin Tests', () => {
 
       const app = await build({ plugin });
       app.mailer.sendInvitationEmail(email, DEFAULT_LINK, itemName, creatorName, lang);
+    });
+  });
+
+  describe('sendPublishNotificationEmail', () => {
+    it('Send publish notification email with default lang', async () => {
+      setupValidateSendPublishNotificationMail(englishTranslations, [itemName]);
+
+      const app = await build({ plugin });
+      app.mailer.sendPublishNotificationEmail(buildMember(), DEFAULT_LINK, itemName);
+    });
+
+    it('Send login mail with default lang if given lang is not available', async () => {
+      const lang = 'not-valid';
+      setupValidateSendPublishNotificationMail(englishTranslations, [itemName]);
+
+      const app = await build({ plugin });
+      app.mailer.sendPublishNotificationEmail(
+        buildMember(lang),
+        DEFAULT_LINK,
+        itemName,
+        lang,
+      );
     });
   });
 });

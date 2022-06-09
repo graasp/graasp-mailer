@@ -13,5 +13,8 @@
   "registrationMailTitle": "Register",
   "exportActionsMailTitle": "Analytic Traces Download Link for %{itemName}",
   "invitationText": "%{creatorName} shared %{itemName} with you on the Graasp platform. Click on the following button to complete your registration.",
-  "invitationMailTitle": "This item was shared with you on Graasp"
+  "invitationMailTitle": "This item was shared with you on Graasp",
+  "publishNotification": "Your item %{itemName} has been published to Graasp Explorer. Click on the following link to view it.",
+  "viewItem": "View Item",
+  "publishNotificationTitle": "Your Item Has Been Published"
 }
