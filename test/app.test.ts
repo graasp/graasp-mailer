@@ -52,7 +52,7 @@ const setupValidateSendInvitationMail = (t: Translations, elements: string[]) =>
 const setupValidateSendExportActionEmail = (t: Translations, elements: string[]) =>
   setupValidateSendMail(t, 'download', elements);
 const setupValidateSendPublishNotificationMail = (t: Translations, elements: string[]) => 
-  setupValidateSendMail(t, 'publish notification', elements);
+  setupValidateSendMail(t, 'publishNotification', elements);
 
 describe('Plugin Tests', () => {
   beforeEach(() => {
