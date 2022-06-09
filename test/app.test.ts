@@ -52,7 +52,7 @@ const setupValidateSendInvitationMail = (t: Translations, elements: string[]) =>
 const setupValidateSendExportActionEmail = (t: Translations, elements: string[]) =>
   setupValidateSendMail(t, 'download', elements);
 const setupValidateSendPublishNotificationMail = (t: Translations, elements: string[]) => 
-  setupValidateSendMail(t, 'publishNotification', elements);
+  setupValidateSendMail(t, 'viewItem', elements);
 
 describe('Plugin Tests', () => {
   beforeEach(() => {
@@ -187,14 +187,14 @@ describe('Plugin Tests', () => {
   });
 
   describe('sendPublishNotificationEmail', () => {
-    it('Send publish notification email with default lang', async () => {
+    it('Send publish notification mail with default lang', async () => {
       setupValidateSendPublishNotificationMail(englishTranslations, [itemName]);
 
       const app = await build({ plugin });
       app.mailer.sendPublishNotificationEmail(buildMember(), DEFAULT_LINK, itemName);
     });
 
-    it('Send login mail with default lang if given lang is not available', async () => {
+    it('Send publish notification mail with default lang if given lang is not available', async () => {
       const lang = 'not-valid';
       setupValidateSendPublishNotificationMail(englishTranslations, [itemName]);
 

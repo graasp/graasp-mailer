@@ -190,9 +190,12 @@ const plugin: FastifyPluginAsync<MailerOptions> = async (fastify, options) => {
   ) {
     fastify.i18n.locale(lang);
     const translated = fastify.i18n.locales[lang] ?? fastify.i18n.locales[DEFAULT_LANG];
+    const text = fastify.i18n.t('publishNotification', {
+      itemName
+    });
     const html = await fastify.view(`${modulePath}/templates/publishNotification.eta`, {
       member,
-      itemName,
+      text,
       translated,
     });
     const title = translated['publishNotificationTitle'];
