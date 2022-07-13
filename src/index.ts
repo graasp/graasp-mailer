@@ -43,6 +43,12 @@ declare module 'fastify' {
         creatorName: string,
         lang?: string,
       ) => Promise<void>;
+      sendPublishNotificationEmail: (
+        member: Member,
+        link: string,
+        itemName: string,
+        lang?: string,
+      ) => Promise<void>;
     };
   }
 }
@@ -175,11 +181,35 @@ const plugin: FastifyPluginAsync<MailerOptions> = async (fastify, options) => {
     await sendMail(fromEmail, member.email, title, link, html);
   }
 
+  // Notification for publish an item
+  async function sendPublishNotificationEmail(
+    member: { email: string; name: string },
+    link: string,
+    itemName: string,
+    lang = DEFAULT_LANG,
+  ) {
+    fastify.i18n.locale(lang);
+    const translated = fastify.i18n.locales[lang] ?? fastify.i18n.locales[DEFAULT_LANG];
+    // this line necessary for .t() to correctly use the changed locale
+    fastify.i18n.replace(translated);
+    const text = fastify.i18n.t('publishNotification', {
+      itemName,
+    });
+    const html = await fastify.view(`${modulePath}/templates/publishNotification.eta`, {
+      member,
+      text,
+      translated,
+    });
+    const title = fastify.i18n.t('publishNotificationTitle', { itemName });
+    await sendMail(fromEmail, member.email, title, link, html);
+  }
+
   fastify.decorate('mailer', {
     sendLoginEmail,
     sendRegisterEmail,
     sendExportActionsEmail,
     sendInvitationEmail,
+    sendPublishNotificationEmail,
   });
 };
 
