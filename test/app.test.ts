@@ -36,7 +36,8 @@ const setupValidateSendMail = (
         translations[keyToCheck]
           // TODO: handle better html parsing
           // parse \' in case of french
-          .replace('\'', '&#39;'),
+          // eslint-disable-next-line quotes
+          .replace("'", '&#39;'),
       );
       elements?.forEach((s) => {
         expect(d.html).toContain(s);
@@ -51,7 +52,7 @@ const setupValidateSendInvitationMail = (t: Translations, elements: string[]) =>
   setupValidateSendMail(t, 'register', elements);
 const setupValidateSendExportActionEmail = (t: Translations, elements: string[]) =>
   setupValidateSendMail(t, 'download', elements);
-const setupValidateSendPublishNotificationMail = (t: Translations, elements: string[]) => 
+const setupValidateSendPublishNotificationMail = (t: Translations, elements: string[]) =>
   setupValidateSendMail(t, 'viewItem', elements);
 
 describe('Plugin Tests', () => {
@@ -199,12 +200,7 @@ describe('Plugin Tests', () => {
       setupValidateSendPublishNotificationMail(englishTranslations, [itemName]);
 
       const app = await build({ plugin });
-      app.mailer.sendPublishNotificationEmail(
-        buildMember(lang),
-        DEFAULT_LINK,
-        itemName,
-        lang,
-      );
+      app.mailer.sendPublishNotificationEmail(buildMember(lang), DEFAULT_LINK, itemName, lang);
     });
   });
 });

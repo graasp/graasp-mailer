@@ -190,15 +190,17 @@ const plugin: FastifyPluginAsync<MailerOptions> = async (fastify, options) => {
   ) {
     fastify.i18n.locale(lang);
     const translated = fastify.i18n.locales[lang] ?? fastify.i18n.locales[DEFAULT_LANG];
+    // this line necessary for .t() to correctly use the changed locale
+    fastify.i18n.replace(translated);
     const text = fastify.i18n.t('publishNotification', {
-      itemName
+      itemName,
     });
     const html = await fastify.view(`${modulePath}/templates/publishNotification.eta`, {
       member,
       text,
       translated,
     });
-    const title = translated['publishNotificationTitle'];
+    const title = fastify.i18n.t('publishNotificationTitle', { itemName });
     await sendMail(fromEmail, member.email, title, link, html);
   }
 
