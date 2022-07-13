@@ -199,6 +199,7 @@ const plugin: FastifyPluginAsync<MailerOptions> = async (fastify, options) => {
       member,
       text,
       translated,
+      link,
     });
     const title = fastify.i18n.t('publishNotificationTitle', { itemName });
     await sendMail(fromEmail, member.email, title, link, html);
