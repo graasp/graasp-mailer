@@ -55,6 +55,8 @@ const setupValidateSendExportActionEmail = (t: Translations, elements: string[])
   setupValidateSendMail(t, 'download', elements);
 const setupValidateSendPublishNotificationMail = (t: Translations, elements: string[]) =>
   setupValidateSendMail(t, 'viewItem', elements);
+const setupValidateSendChatMentionNotificationMail = (t: Translations, elements: string[]) =>
+  setupValidateSendMail(t, 'viewChat', elements);
 
 describe('Plugin Tests', () => {
   beforeEach(() => {
@@ -202,6 +204,34 @@ describe('Plugin Tests', () => {
 
       const app = await build({ plugin });
       app.mailer.sendPublishNotificationEmail(buildMember(lang), DEFAULT_LINK, itemName, lang);
+    });
+  });
+
+  describe('sendChatMentionNotificationEmail', () => {
+    it('Send chat mention notification mail with default lang', async () => {
+      setupValidateSendChatMentionNotificationMail(englishTranslations, [itemName]);
+
+      const app = await build({ plugin });
+      app.mailer.sendChatMentionNotificationEmail(
+        buildMember(),
+        DEFAULT_LINK,
+        itemName,
+        creatorName,
+      );
+    });
+
+    it('Send chat mention notification mail with default lang if given lang is not available', async () => {
+      const lang = 'not-valid';
+      setupValidateSendChatMentionNotificationMail(englishTranslations, [itemName]);
+
+      const app = await build({ plugin });
+      app.mailer.sendChatMentionNotificationEmail(
+        buildMember(),
+        DEFAULT_LINK,
+        itemName,
+        creatorName,
+        lang,
+      );
     });
   });
 });
