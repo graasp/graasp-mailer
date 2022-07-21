@@ -42,7 +42,7 @@
   "devDependencies": {
     "@commitlint/cli": "16.2.3",
     "@commitlint/config-conventional": "16.2.1",
-    "@graasp/sdk": "github:graasp/graasp-utils.git#15/testUtils",
+    "@graasp/sdk": "github:graasp/graasp-sdk.git",
     "@trivago/prettier-plugin-sort-imports": "3.2.0",
     "@types/eslint": "^8.4.1",
     "@types/jest": "27.4.1",
