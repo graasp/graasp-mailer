@@ -1,5 +1,7 @@
-import fastify, { FastifyPluginAsync } from 'fastify';
 import { Server } from 'http';
+
+import fastify, { FastifyPluginAsync } from 'fastify';
+
 import { MailerOptions } from '../src';
 
 const DEFAULT_OPTIONS = {

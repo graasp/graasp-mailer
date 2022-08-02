@@ -1,11 +1,12 @@
-import { v4 } from 'uuid';
-import build from './app';
-import plugin from '../src/index';
-import { Member } from 'graasp';
 import util from 'util';
+import { v4 } from 'uuid';
+
+import { DEFAULT_EXPORT_ACTIONS_VALIDITY_IN_DAYS, Member } from '@graasp/sdk';
+
+import plugin from '../src/index';
 import englishTranslations from '../src/lang/en.json';
 import frenchTranslations from '../src/lang/fr.json';
-import { DEFAULT_EXPORT_ACTIONS_VALIDITY_IN_DAYS } from '../src/constants';
+import build from './app';
 
 const buildMember = (lang?: string) =>
   ({

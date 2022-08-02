@@ -1,14 +1,13 @@
-import { promisify } from 'util';
+import * as eta from 'eta';
 import path from 'path';
+import pointOfView from 'point-of-view';
+import { promisify } from 'util';
 
 import { FastifyPluginAsync } from 'fastify';
 import fp from 'fastify-plugin';
-import pointOfView from 'point-of-view';
-import * as eta from 'eta';
 import fastifyPolyglot from 'fastify-polyglot';
 
-import { Member } from 'graasp';
-import { DEFAULT_LANG, DEFAULT_EXPORT_ACTIONS_VALIDITY_IN_DAYS } from './constants';
+import { DEFAULT_EXPORT_ACTIONS_VALIDITY_IN_DAYS, DEFAULT_LANG, Member } from '@graasp/sdk';
 
 declare module 'fastify' {
   interface FastifyInstance {
