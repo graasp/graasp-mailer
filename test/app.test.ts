@@ -209,7 +209,7 @@ describe('Plugin Tests', () => {
 
   describe('sendChatMentionNotificationEmail', () => {
     it('Send chat mention notification mail with default lang', async () => {
-      setupValidateSendChatMentionNotificationMail(englishTranslations, [itemName]);
+      setupValidateSendChatMentionNotificationMail(englishTranslations, [itemName, DEFAULT_LINK, creatorName]);
 
       const app = await build({ plugin });
       app.mailer.sendChatMentionNotificationEmail(
@@ -222,7 +222,7 @@ describe('Plugin Tests', () => {
 
     it('Send chat mention notification mail with default lang if given lang is not available', async () => {
       const lang = 'not-valid';
-      setupValidateSendChatMentionNotificationMail(englishTranslations, [itemName]);
+      setupValidateSendChatMentionNotificationMail(englishTranslations, [itemName, DEFAULT_LINK, creatorName]);
 
       const app = await build({ plugin });
       app.mailer.sendChatMentionNotificationEmail(
