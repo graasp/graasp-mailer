@@ -48,6 +48,13 @@ declare module 'fastify' {
         itemName: string,
         lang?: string,
       ) => Promise<void>;
+      sendChatMentionNotificationEmail: (
+        member: Member,
+        link: string,
+        itemName: string,
+        creatorName: string,
+        lang?: string,
+      ) => Promise<void>;
     };
   }
 }
@@ -204,12 +211,42 @@ const plugin: FastifyPluginAsync<MailerOptions> = async (fastify, options) => {
     await sendMail(fromEmail, member.email, title, link, html);
   }
 
+  // Notification for chat mention
+  async function sendChatMentionNotificationEmail(
+    member: { email: string; name: string },
+    link: string,
+    itemName: string,
+    creatorName: string,
+    lang = DEFAULT_LANG,
+  ) {
+    fastify.i18n.locale(lang);
+    const translated = fastify.i18n.locales[lang] ?? fastify.i18n.locales[DEFAULT_LANG];
+    // this line necessary for .t() to correctly use the changed locale
+    fastify.i18n.replace(translated);
+    const text = fastify.i18n.t('chatMentionNotification', {
+      creatorName,
+      itemName,
+    });
+    const html = await fastify.view(`${modulePath}/templates/chatMentionNotification.eta`, {
+      member,
+      text,
+      translated,
+      link,
+    });
+    const title = fastify.i18n.t('chatMentionNotificationTitle', {
+      creatorName,
+      itemName,
+    });
+    await sendMail(fromEmail, member.email, title, link, html);
+  }
+
   fastify.decorate('mailer', {
     sendLoginEmail,
     sendRegisterEmail,
     sendExportActionsEmail,
     sendInvitationEmail,
     sendPublishNotificationEmail,
+    sendChatMentionNotificationEmail,
   });
 };
 

@@ -16,5 +16,8 @@
   "invitationMailTitle": "Cet élément a été partagé avec vous sur Graasp",
   "publishNotification": "Votre élément %{itemName} a été publié sur Graasp Library. Cliquez sur le lien suivant pour le voir.",
   "viewItem": "Voir l'élément",
-  "publishNotificationTitle": "%{itemName} a été publié"
+  "publishNotificationTitle": "%{itemName} a été publié",
+  "chatMentionNotification": "Vous avez été mentionné par %{creatorName} dans la conversation liée à %{itemName}. Cliquez sur le lien suivant pour voir la conversation.",
+  "chatMentionNotificationTitle": "%{creatorName} vous a mentionné dans %{itemName}",
+  "viewChat": "Voir la conversation"
 }
